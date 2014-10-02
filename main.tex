@@ -1,0 +1,77 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+
+
+\swapnumbers
+\newtheoremstyle{theorem}% name
+  {}%         Space above, empty = `usual value'
+  {}%         Space below
+  {\itshape}% Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\bfseries}% Head font
+  {.}%        Punctuation after head
+  {\newline}% Space after head: \newline = linebreak
+  {}%         Head spec
+
+\newtheoremstyle{definition}% name
+  {}%         Space above, empty = `usual value'
+  {}%         Space below
+  {}% Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\bfseries}% Head font
+  {.}%        Punctuation after thm head
+  {\newline}% Space after head: \newline = linebreak
+  {}%         Head spec
+
+
+\theoremstyle{theorem}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{example}[thm]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[thm]{Remark}
+
+%Makes "Proof." boldface
+\makeatletter
+\renewenvironment{proof}[1][\proofname] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\mbox{}\\*}{\popQED\endtrivlist\@endpefalse}
+\makeatother
+
+
+\begin{document}
+\section{Some examples}
+
+\begin{defn}
+Here is a definition of \emph{something}.
+\end{defn}
+
+\begin{thm}[Intermediate Value Theorem]
+This is a theorem without name, but with a number. 
+\end{thm}
+
+Note that this is not working (yet). It should look like: \newline \textbf{1.2 Intermediate Value Theorem.}
+
+\begin{thm}
+This is a theorem with a name and with a number.
+\end{thm}
+
+\begin{proof}
+Here is the proof.
+\end{proof}
+
+\begin{thm}
+\begin{enumerate}
+\item Theorem that starts with a list.
+\item Which doesn't seem to work.
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+Here is the proof.
+\end{proof}
+
+\end{document}
