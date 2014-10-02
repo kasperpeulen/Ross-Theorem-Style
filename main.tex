@@ -1,34 +1,32 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath, amssymb, amsthm}
 
-
-\swapnumbers
 \newtheoremstyle{theorem}% name
   {}%         Space above, empty = `usual value'
   {}%         Space below
   {\itshape}% Body font
-  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {}%         Indent amount 
   {\bfseries}% Head font
   {.}%        Punctuation after head
   {\newline}% Space after head: \newline = linebreak
-  {}%         Head spec
-
-\newtheoremstyle{definition}% name
-  {}%         Space above, empty = `usual value'
-  {}%         Space below
-  {}% Body font
-  {}%         Indent amount (empty = no indent, \parindent = para indent)
-  {\bfseries}% Head font
-  {.}%        Punctuation after thm head
-  {\newline}% Space after head: \newline = linebreak
-  {}%         Head spec
-
+   {\def\temp{#3}\ifx\temp\empty\thmnumber{#2 }\thmname{#1}\else\thmnumber{#2}\thmnote{ #3}\fi}%         Head spec
 
 \theoremstyle{theorem}
 \newtheorem{thm}{Theorem}[section]
 \newtheorem{prop}[thm]{Proposition}
 \newtheorem{lem}[thm]{Lemma}
 \newtheorem{cor}[thm]{Corollary}
+
+\swapnumbers	
+\newtheoremstyle{definition}% name
+  {}%         Space above, empty = `usual value'
+  {}%         Space below
+  {}% Body font
+  {}%         Indent amount
+  {\bfseries}% Head font
+  {.}%        Punctuation after thm head
+  {\newline}% Space after head: \newline = linebreak
+  {}%         Head spec
 
 \theoremstyle{definition}
 \newtheorem{defn}[thm]{Definition}
@@ -41,6 +39,24 @@
 \renewenvironment{proof}[1][\proofname] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\mbox{}\\*}{\popQED\endtrivlist\@endpefalse}
 \makeatother
 
+%Fix if theorem starts with a list
+\makeatletter
+\def\itemfix{%
+\if@inlabel
+ \noindent \par\nobreak\vskip-\baselineskip\hrule\@height\z@
+\fi}
+
+\let\olditemize\itemize
+\def\itemize{\itemfix\olditemize}
+\makeatother
+
+\makeatletter
+\def\enumfix{%
+\if@inlabel
+ \noindent \par\nobreak\vskip-\baselineskip\hrule\@height\z@
+\fi}
+\let\oldenumerate\enumerate
+\def\enumerate{\enumfix\oldenumerate}
 
 \begin{document}
 \section{Some examples}
@@ -50,13 +66,11 @@ Here is a definition of \emph{something}.
 \end{defn}
 
 \begin{thm}[Intermediate Value Theorem]
-This is a theorem without name, but with a number. 
+This is a theorem with a name and with a number.
 \end{thm}
 
-Note that this is not working (yet). It should look like: \newline \textbf{1.2 Intermediate Value Theorem.}
-
 \begin{thm}
-This is a theorem with a name and with a number.
+This is a theorem without name and with a number.
 \end{thm}
 
 \begin{proof}
@@ -66,12 +80,15 @@ Here is the proof.
 \begin{thm}
 \begin{enumerate}
 \item Theorem that starts with a list.
-\item Which doesn't seem to work.
+\item Which seems to work.
 \end{enumerate}
 \end{thm}
 
-\begin{proof}
-Here is the proof.
-\end{proof}
+\begin{thm}
+\begin{itemize}
+\item Theorem that starts with a list.
+\item Which seems to work.
+\end{itemize}
+\end{thm}
 
 \end{document}
